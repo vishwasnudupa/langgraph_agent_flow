@@ -1,0 +1,9 @@
+{
+    "ticket_id": "FW-050",
+    "summary": "UART initialization hang in firmware bootloader on STM32H7",
+    "description": "The bootloader hangs during UART initialization on the STM32H7 when the USART3 peripheral clock is not properly enabled before configuring the baud rate register. The hang occurs in uart_init() which writes to USART_BRR before enabling the USART clock in RCC_APB1ENR1.\n\nExpected flow:\n  1. Enable USART3 clock via RCC\n  2. Configure GPIO pins for AF7\n  3. Set baud rate in BRR\n  4. Enable USART\n\nActual flow:\n  1. Configure GPIO (works)\n  2. Set BRR (hangs — bus fault because clock not enabled)\n\nThis is a firmware-level issue in the bare-metal bootloader code.",
+    "labels": ["firmware", "uart", "stm32", "bootloader", "hang"],
+    "component": "firmware/uart",
+    "priority": "Critical",
+    "status": "To Do"
+}

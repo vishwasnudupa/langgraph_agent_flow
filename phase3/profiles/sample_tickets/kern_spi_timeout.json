@@ -1,0 +1,9 @@
+{
+    "ticket_id": "KERN-202",
+    "summary": "SPI transfer timeout on ARM64 platform with DMA enabled",
+    "description": "SPI transfers intermittently timeout on the i.MX8 platform when DMA is enabled. The spi-imx driver hangs in wait_for_completion_timeout() and never receives the DMA completion callback.\n\nLog output:\n  spi_imx 30820000.spi: I/O Error in DMA RX\n  spi_master spi0: failed to transfer one message from queue\n\nDisabling DMA (spi-imx.dma=0) works around the issue. Suspected race between DMA completion IRQ and SPI controller status polling.",
+    "labels": ["kernel", "driver", "spi", "dma", "arm64", "timeout"],
+    "component": "drivers/spi",
+    "priority": "High",
+    "status": "To Do"
+}

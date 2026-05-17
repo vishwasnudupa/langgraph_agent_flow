@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kernel-coding-agent"
+version = "0.1.0"
+description = "LangGraph multi-agent system for kernel/embedded/firmware bug fixing"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "Vishwa"},
+]
+
+dependencies = [
+    # Agent orchestration
+    "langgraph>=0.4",
+    "langchain-core>=0.3",
+
+    # LLM providers
+    "langchain-openai>=0.3",
+    "langchain-google-genai>=2.0",
+    "langchain-anthropic>=0.3",
+
+    # Core
+    "pydantic>=2.0",
+    "python-dotenv>=1.0",
+
+    # CLI & Dashboard
+    "typer>=0.12",
+    "rich>=13.0",
+
+    # Storage
+    "aiosqlite>=0.20",
+
+    # Code analysis (optional — install if available)
+    # "tree-sitter>=0.23",
+    # "tree-sitter-c",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.8",
+]
+analysis = [
+    "tree-sitter>=0.23",
+    "tree-sitter-c",
+]
+
+[project.scripts]
+kca = "src.cli.main:app"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]

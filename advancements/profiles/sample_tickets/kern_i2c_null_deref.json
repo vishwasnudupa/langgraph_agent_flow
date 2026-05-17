@@ -1,0 +1,9 @@
+{
+    "ticket_id": "KERN-101",
+    "summary": "NULL pointer dereference in i2c_transfer when adapter is unregistered",
+    "description": "When an I2C adapter is hot-unplugged while a transfer is in progress, the kernel crashes with a NULL pointer dereference in i2c_transfer(). The crash occurs because adap->algo->master_xfer is called after the adapter has been freed.\n\nCall trace:\n  i2c_transfer+0x5c/0x120\n  i2c_smbus_xfer+0x104/0x380\n  i2c_smbus_read_byte_data+0x44/0x80\n\nThis affects all platforms using the i2c-core subsystem. Reproducible by unbinding the i2c adapter while running i2cdetect.",
+    "labels": ["kernel", "driver", "i2c", "null-deref", "regression"],
+    "component": "drivers/i2c",
+    "priority": "Critical",
+    "status": "To Do"
+}
